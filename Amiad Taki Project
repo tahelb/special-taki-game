@@ -1,0 +1,41 @@
+Amiad Taki Project
+Contributors:
+
+Tahel Butbul - 315259168
+Yonatan Bansay - 207599499
+Overview
+Amiad Taki is a variation of the popular card game "Taki," designed by Kibbutz Amiad. The game is based on the client-server model, allowing 2-4 players to participate in a single game. The objective is to be the first player to discard all the cards in their hand.
+
+Multiple games can run simultaneously, and each player needs to request access from the server to join a game.
+
+Virtual Environment
+The project runs in a GNS3 virtual environment using an OSPF network setup with 8 virtual machines:
+
+One machine runs the server code.
+The other 7 machines act as clients.
+This setup allows multiple games to run concurrently across the network, with each player connecting to the server and playing in real-time.
+
+Game Rules
+Each player has five options in their turn:
+
+Play a single card: The card must match either the value or the suit of the card at the top of the discard pile.
+Play a set: Discard a set of cards of the same value, where at least one card matches either the value or suit of the top card on the discard pile.
+Play a sequence: Play a sequence of at least 3 consecutive cards of the same suit, where the lowest or highest card matches the top card of the discard pile.
+Draw a card from the deck.
+Take the top card from the discard pile.
+Key Assumptions
+Client Validation: The server trusts the messages it receives from the clients and assumes they follow the game rules. All input validation and rule enforcement are handled on the client side.
+Game Continuity: If a player is missing crucial information (e.g., disconnects), the game cannot continue until they either reconnect or exit.
+Game Flow
+The game starts when players connect to the server and request to join a session.
+Players take turns following the game rules.
+A session ends when a player successfully discards all their cards.
+Server and Client Communication
+The project implements a communication protocol between the server and clients. Players send messages to the server to perform actions (e.g., play a card, draw a card), and the server broadcasts the game state to all participants.
+
+Disconnection Handling
+If a player disconnects, the server detects this and removes the player from the game.
+The game will halt if a player disconnects during critical gameplay until the issue is resolved.
+Project Structure
+Server Code: Handles multiple game sessions, manages player connections, and enforces game flow.
+Client Code: Allows players to interact with the game, enforcing local game rules and sending valid actions to the server.
